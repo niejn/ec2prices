@@ -74,9 +74,12 @@ func GetPriceList(r Resource) (*PriceList, error) {
 		return nil, fmt.Errorf("Couldn't find a JSON price file for the resource: %+v", r)
 	}
 	data, err := ioutil.ReadFile(priceFile)
+	if err != nil {
+		return nil, err
+	}
 	matches := innerJSON.FindSubmatch(data)
 	if matches == nil || len(matches) != 2 {
-		return nil, fmt.Errorf("Couldn't parse the inner JSON of %s", priceFile)
+		return nil, fmt.Errorf("Couldn't extract the inner JSON of %s", priceFile)
 	}
 	data = matches[1] // Submatch has the inner JSON
 	if err != nil {
