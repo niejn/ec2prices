@@ -13,8 +13,8 @@ import ec2p "github.com/recursionpharma/ec2prices"
 
 // I want pricing for Linux On-Demand instances
 
-r := ec2p.Resources{Platform: ec2p.Linux, PurchaseModel: ec2p.OnDemand}
-prices := ec2p.GetPriceList(r)
+r := ec2p.Resource{Platform: ec2p.Linux, PurchaseModel: ec2p.OnDemand}
+prices, err := ec2p.GetPriceList(r)
 ```
 
 ## Contributing
