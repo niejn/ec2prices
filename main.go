@@ -30,7 +30,7 @@ type Resource struct {
 
 // PriceList represents the JSON file
 type PriceList struct {
-	Version float64 `json:"float,omitempty,string"`
+	Version float64 `json:"vers,omitempty"`
 	Config  Config  `json:"config,omitempty"`
 }
 

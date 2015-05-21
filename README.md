@@ -8,13 +8,53 @@ Right now supports Linux On-Demand instances, but is easily expanded.
 
 ## Usage
 
+```go
+package main
+
+import (
+	"github.com/kr/pretty"
+	ec2p "github.com/recursionpharma/ec2prices"
+)
+
+func main() {
+	// Pricing for Linux On-Demand instances
+	r := ec2p.Resource{Platform: ec2p.Linux, PurchaseModel: ec2p.OnDemand}
+	prices, _ := ec2p.GetPriceList(r)
+	pretty.Print(prices)
+}
 ```
-import ec2p "github.com/recursionpharma/ec2prices"
 
-// I want pricing for Linux On-Demand instances
+Output:
 
-r := ec2p.Resource{Platform: ec2p.Linux, PurchaseModel: ec2p.OnDemand}
-prices, err := ec2p.GetPriceList(r)
+```
+&ec2prices.PriceList{
+    Version: 0.01,
+    Config:  ec2prices.Config{
+        Rate:         "perhr",
+        ValueColumns: {"vCPU", "ECU", "memoryGiB", "storageGB", "linux"},
+        Currencies:   {"USD"},
+        Regions:      {
+            {
+                Region:        "us-east-1",
+                InstanceTypes: {
+                    {
+                        Type:  "generalCurrentGen",
+                        Sizes: {
+                            {
+                                Size:         "t2.micro",
+                                VCPU:         1,
+                                ECU:          "variable",
+                                MemoryGiB:    1,
+                                StorageGB:    "ebsonly",
+                                ValueColumns: {
+                                    {
+                                        Name:   "linux",
+                                        Prices: {"USD":0.013},
+                                    },
+                                },
+                            },
+        [...]
+
 ```
 
 ## Contributing
