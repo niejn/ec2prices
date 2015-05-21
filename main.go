@@ -3,8 +3,9 @@ package ec2prices
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"regexp"
+
+	"github.com/recursionpharma/ec2prices/files"
 )
 
 const (
@@ -17,7 +18,7 @@ const (
 
 var (
 	filesByResource = map[Resource]string{
-		Resource{Platform: Linux, PurchaseModel: OnDemand}: "json/linux-od.min.js",
+		Resource{Platform: Linux, PurchaseModel: OnDemand}: files.LinuxOnDemand,
 	}
 
 	innerJSON = regexp.MustCompile(`callback\((.*)\);$`) // Ignore comments and callback
@@ -68,25 +69,14 @@ type ValueColumn struct {
 
 // GetPrices parses the JSON file for the given resource, and unmarshals it into a struct
 func GetPriceList(r Resource) (*PriceList, error) {
-	var priceFile string
+	var f string
 	var ok bool
-	if priceFile, ok = filesByResource[r]; !ok {
+	if f, ok = filesByResource[r]; !ok {
 		return nil, fmt.Errorf("Couldn't find a JSON price file for the resource: %+v", r)
 	}
-	data, err := ioutil.ReadFile(priceFile)
-	if err != nil {
-		return nil, err
-	}
-	matches := innerJSON.FindSubmatch(data)
-	if matches == nil || len(matches) != 2 {
-		return nil, fmt.Errorf("Couldn't extract the inner JSON of %s", priceFile)
-	}
-	data = matches[1] // Submatch has the inner JSON
-	if err != nil {
-		return nil, err
-	}
+	data := []byte(f)
 	p := &PriceList{}
-	err = json.Unmarshal(data, p)
+	err := json.Unmarshal(data, p)
 	if err != nil {
 		return nil, err
 	}
