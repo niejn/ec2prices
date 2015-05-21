@@ -1,4 +1,4 @@
-# ec2prices
+# ec2prices [![Doc Status](https://godoc.org/github.com/recursionpharma/ec2prices?status.png)](https://godoc.org/github.com/recursionpharma/ec2prices)
 Parses the unofficial EC2 price lists into a struct since they are not available via an API call.
 
 The data is culled from JSON files available from Amazon, but they state:
