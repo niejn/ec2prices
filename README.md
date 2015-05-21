@@ -23,4 +23,13 @@ Enjoy and do please contribute pricing for other resource types if you use
 them. For most cases this involves downloading the right JSON file and adding
 a few constants.
 
-The full list of JSON price files is here: http://stackoverflow.com/questions/7334035/get-ec2-pricing-programmatically
+1. Download the JSON file you want from: http://stackoverflow.com/questions/7334035/get-ec2-pricing-programmatically
+
+2. Put the inner JSON (from between `callback( ... );` into http://jsonformat.com/ so that the keys are double-quoted (Go's JSON unmarshaller will blow up otherwise).
+
+3. Re-compress the resulting properly formatted JSON using something like
+   http://www.httputility.net/json-minifier.aspx.
+
+4. Add this JSON data as a string variable in files/files.go
+
+5. Add a mapping from a resource to this JSON variable in main.go.
