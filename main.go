@@ -32,7 +32,7 @@ type Resource struct {
 
 // PriceList represents the JSON file
 type PriceList struct {
-	Version float64 `json:"float,omitempty"`
+	Version float64 `json:"float,omitempty,string"`
 	Config  Config  `json:"config,omitempty"`
 }
 
@@ -55,16 +55,16 @@ type InstanceType struct {
 
 type Size struct {
 	Size         string        `json:"size,omitempty"`
-	VCPU         int           `json:"vCPU,omitempty"`
-	ECU          string        `json:"ECU,omitempty"`
-	MemoryGiB    string        `json:"memoryGiB,omitempty"`
+	VCPU         int           `json:"vCPU,omitempty,string"`
+	ECU          string        `json:"ECU,omitempty"` // Not int since sometimes "variable"
+	MemoryGiB    float64       `json:"memoryGiB,omitempty,string"`
 	StorageGB    string        `json:"storageGB,omitempty"`
 	ValueColumns []ValueColumn `json:"valueColumns,omitempty"`
 }
 
 type ValueColumn struct {
-	Name   string             `json:"name,omitempty"`
-	Prices map[string]float64 `json:"prices,omitempty"`
+	Name string `json:"name,omitempty"`
+	//Prices map[string]float64 `json:"prices,omitempty"`
 }
 
 // GetPrices parses the JSON file for the given resource, and unmarshals it into a struct
