@@ -3,7 +3,6 @@ package ec2prices
 import (
 	"encoding/json"
 	"fmt"
-	"regexp"
 	"strconv"
 
 	"github.com/recursionpharma/ec2prices/files"
@@ -21,8 +20,6 @@ var (
 	filesByResource = map[Resource]string{
 		Resource{Platform: Linux, PurchaseModel: OnDemand}: files.LinuxOnDemand,
 	}
-
-	innerJSON = regexp.MustCompile(`callback\((.*)\);$`) // Ignore comments and callback
 )
 
 // Resource represents a kind of thing you can buy on EC2
